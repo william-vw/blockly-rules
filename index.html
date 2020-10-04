@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+	.error { color: red }
+	</style>
+</head>
+<body>
+
+<div class="blockly-editor">
+	<div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
+	<xml id="toolbox" style="display: none">
+		<block type="sw_qname"></block>
+		<block type="sw_var"></block>
+		<block type="sw_statement"></block>
+		<block type="sw_rule_if_create_with"></block>
+		<block type="sw_rule_then_create_with"></block>
+		<block type="sw_rule"></block>
+	</xml>
+</div>
+<br />
+<button id="generate">Generate</button>
+<br /><br />
+<div id="output"></div>
+
+<!-- <script src="../../blockly_uncompressed.js"></script> -->
+<script src="https://unpkg.com/blockly/blockly.min.js"></script>
+
+<script src="blocks/rules.js"></script>	
+<script src="generators/rules.js"></script>	
+<script src="generators/rules/all.js"></script>	
+<script src="msg/messages.js"></script>	
+<script src="main.js"></script>	
+
+<script>
+document.getElementById("generate").addEventListener('click', function(e) {
+	const workspace = Blockly.getMainWorkspace();
+	var output;
+	try {
+		output = Blockly.Rules.workspaceToCode(workspace);
+	} catch(error) {
+		output = "<span class='error'>" + error + "</span>";
+	}
+	
+	// console.log(output);
+	document.getElementById("output").innerHTML = output;
+});
+</script>
+
+</body>
+</html>
