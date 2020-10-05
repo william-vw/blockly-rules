@@ -1632,7 +1632,12 @@ Blockly.Msg.COLLAPSED_WARNINGS_WARNING = 'Collapsed blocks contain warnings.';
 
 Blockly.Msg.SW_QNAME_TOOLTIP = "Enter a qualified name here, with namespace (e.g., foaf) and localname (e.g., name).";
 Blockly.Msg.SW_VAR_TOOLTIP = "Enter a variable name here.";
-Blockly.Msg.SW_STATEMENT_TOOLTIP = "Connect this statement to a subject, predicate and object, which can be IRIs (e.g., qualified names) or variables.";
+Blockly.Msg.SW_STATEMENT_TOOLTIP = "Connect this statement to a subject, predicate and object, which can be IRIs (e.g., qualified names), variables, strings or numbers.";
 Blockly.Msg.SW_RULE_TOOLTIP = "Connect this rule to an IF clause and a THEN clause.";
-Blockly.Msg.SW_RULE_IF_CREATE_WITH_TOOLTIP = "Connect this IF clause to a series of statements.";
-Blockly.Msg.SW_RULE_THEN_CREATE_WITH_TOOLTIP = "Connect this THEN clause to a series of statements.";
+Blockly.Msg.SW_RULE_IF_CREATE_WITH_TOOLTIP = "Connect this IF clause to a series of statements and/or builtins.";
+Blockly.Msg.SW_RULE_THEN_CREATE_WITH_TOOLTIP = "Connect this THEN clause to a series of statements and/or builtins.";
+
+Blockly.Msg.SW_BUILTIN_UNARY_FN_TOOLTIP = "Connect this unary builtin to a term.";
+Blockly.Msg.SW_BUILTIN_TERNARY_FN_TOOLTIP = "Connect this ternary builtin to set of terms.";
+Blockly.Msg.SW_BUILTIN_BINARY_OP_TOOLTIP = "Connect this binary builtin to a set of terms.";
+Blockly.Msg.SW_BUILTIN_TERNARY_OP_TOOLTIP = "Connect this ternary builtin to a set of terms.";
