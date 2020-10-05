@@ -9,3 +9,17 @@
 Blockly.Rules = new Blockly.Generator('Rules');
 
 Blockly.Rules.PRECEDENCE = 0;
+
+/**
+ * Encode a string as a properly escaped RDF string, complete with
+ * quotes (borrowed from Blockly.JavaScript)
+ * @param {string} string Text to encode.
+ * @return {string} RDF string.
+ * @private
+ */
+Blockly.Rules.quote_ = function(string) {
+  string = string.replace(/\\/g, '\\\\')
+                 .replace(/\n/g, '\\\n')
+                 .replace(/"/g, '\\\"');
+  return '"' + string + '"';
+};
