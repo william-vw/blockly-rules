@@ -1,0 +1,141 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="sw_rule" id="dEH2og;cz+G`kbTQ%wV[" x="101" y="145">
+    <statement name="IF">
+      <block type="sw_statement" id="1b0+:TtS#dMYl6QkU?Ki">
+        <value name="SUBJECT">
+          <block type="sw_qname" id="sv*ZsulV_eo*/PoI1APp">
+            <field name="NS">a</field>
+            <field name="LN">b</field>
+          </block>
+        </value>
+        <value name="PREDICATE">
+          <block type="sw_qname" id="MhnG]#H1rf{I9x~iKagc">
+            <field name="NS">c</field>
+            <field name="LN">d</field>
+          </block>
+        </value>
+        <value name="OBJECT">
+          <block type="sw_qname" id="@cpn3Y,a}[]l~3SENn*N">
+            <field name="NS">e</field>
+            <field name="LN">f</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="THEN">
+      <block type="sw_statement" id="ILX1O(9yX(P-mF[R{$-v">
+        <value name="SUBJECT">
+          <block type="sw_string" id="HflBDbMXv.fcaEK$u4EO">
+            <field name="TEXT">a</field>
+          </block>
+        </value>
+        <value name="PREDICATE">
+          <block type="sw_string" id="XY,$b$;U*L+Z~((eQ}J)">
+            <field name="TEXT">b</field>
+          </block>
+        </value>
+        <value name="OBJECT">
+          <block type="sw_string" id="lTR.T#xsPBY9|,d|b#c5">
+            <field name="TEXT">c</field>
+          </block>
+        </value>
+        <next>
+          <block type="sw_rule" id="2phk8cCv%CI=+Kuk/ADI">
+            <statement name="IF">
+              <block type="sw_statement" id="MG;7d)q8iYRen2SZZ4h{">
+                <value name="SUBJECT">
+                  <block type="sw_qname" id="fpAX^u(r2|w_qy9uUo_u">
+                    <field name="NS">x</field>
+                    <field name="LN">y</field>
+                  </block>
+                </value>
+                <value name="PREDICATE">
+                  <block type="sw_qname" id="fr7s+Wr9]7^en(H0wC;=">
+                    <field name="NS">y</field>
+                    <field name="LN">z</field>
+                  </block>
+                </value>
+                <value name="OBJECT">
+                  <block type="sw_qname" id="]G++18-BT.eZh8[NEpE!">
+                    <field name="NS">e</field>
+                    <field name="LN">f</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <statement name="THEN">
+              <block type="sw_statement" id=",q?a3UD]W94KX5qyNu6s">
+                <value name="SUBJECT">
+                  <block type="sw_qname" id="vC:0J$|@b0.FfY+.ss5}">
+                    <field name="NS">g</field>
+                    <field name="LN">h</field>
+                  </block>
+                </value>
+                <value name="PREDICATE">
+                  <block type="sw_qname" id="v)WCg-OI_b~WPMPc.w!W">
+                    <field name="NS">i</field>
+                    <field name="LN">j</field>
+                  </block>
+                </value>
+                <value name="OBJECT">
+                  <block type="sw_qname" id="bbyfou3my}w:[(]+8#Qv">
+                    <field name="NS">k</field>
+                    <field name="LN">l</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="sw_rule" id="~SHKeCv0t,w`/=5*=d6|">
+                    <statement name="IF">
+                      <block type="sw_statement" id="/Kre?n{SuYKJ-B8xmlLF">
+                        <value name="SUBJECT">
+                          <block type="sw_qname" id="1p,@!!WpQAG.vEKu,H#3">
+                            <field name="NS">w</field>
+                            <field name="LN">w</field>
+                          </block>
+                        </value>
+                        <value name="PREDICATE">
+                          <block type="sw_qname" id="m7cfs#ZwUp~8!qZ/4[gu">
+                            <field name="NS">v</field>
+                            <field name="LN">v</field>
+                          </block>
+                        </value>
+                        <value name="OBJECT">
+                          <block type="sw_qname" id="It8lUL;Jeqi1z7vn;/~)">
+                            <field name="NS">x</field>
+                            <field name="LN">x</field>
+                          </block>
+                        </value>
+                      </block>
+                    </statement>
+                    <statement name="THEN">
+                      <block type="sw_statement" id="6%o`GZovBnV-|9{!7i7)">
+                        <value name="SUBJECT">
+                          <block type="sw_qname" id=":|fBA-A[3ZKB0tIfEz;=">
+                            <field name="NS">l</field>
+                            <field name="LN">m</field>
+                          </block>
+                        </value>
+                        <value name="PREDICATE">
+                          <block type="sw_qname" id="P@69ttKZBW`c(UXAb_2$">
+                            <field name="NS">n</field>
+                            <field name="LN">o</field>
+                          </block>
+                        </value>
+                        <value name="OBJECT">
+                          <block type="sw_qname" id="o,RqI~k`OTKy,3Y_6]G=">
+                            <field name="NS">p</field>
+                            <field name="LN">q</field>
+                          </block>
+                        </value>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>
