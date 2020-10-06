@@ -80,7 +80,7 @@ Blockly.defineBlocksWithJsonArray([
 		{
 			"type": "input_statement",
 			"name": "IF",
-			// "check": [ "sw_statement", "sw_rule_builtin" ]
+			"check": [ "sw_statement", "sw_rule_builtin" ]
 		}
 	],
 	"message1": "%{BKY_SW_RULE_THEN} %1",
@@ -88,11 +88,11 @@ Blockly.defineBlocksWithJsonArray([
 		{
 			"type": "input_statement",
 			"name": "THEN",
-			// "check": "sw_rule"
+			"check": "sw_rule"
 		}
 	],
-	"previousStatement": null, // "sw_rule",
-	"nextStatement": null, // "sw_rule",
+	"previousStatement": "sw_rule",
+	"nextStatement": "sw_rule",
 	"style": "logic_blocks",
 	// "helpUrl": "%{BKY_SW_RULE_HELPURL}",
 	"tooltip": "%{BKY_SW_RULE_TOOLTIP}"

@@ -73,21 +73,52 @@ Blockly.Rules['sw_rule_builtin_ternary_op'] = (block) => sw_rule_builtin_generat
 
 Blockly.Rules['sw_rule'] = function(block) {
 	Blockly.Rules.VAR_CNT = 0;
+				
+	// const if_clause = Blockly.Rules.statementToCode(block, 'IF');
+	// if (if_clause == '')
+		// throw Error("missing IF clause");
+	//
+	// const then_clause = Blockly.Rules.statementToCode(block, 'THEN');
+	// if (then_clause == '')
+		// throw Error("missing THEN clause");
+	//
+	// const code = "";
+		// if_clause +
+			// "\n->\n" + 
+		// then_clause;
+		
+	const nestedRules = [];
 	
-	// console.log(block);
+	const clauses = [];
+	const children = block.getChildren();
+	for (var i = 0; i < children.length; i++) {
+		const child = children[i];
+		var clause = [];
+		var next = child;
+		while (next) {			
+			if (next.type == 'sw_rule') {
+				if (i == 0)
+					throw Error("no nested rules allowed in IF clause");
+				nestedRules.push(next);
+			} else {
+				clause.push(Blockly.Rules.blockToCode(next));
+			}
+			next = next.getNextBlock();
+		}		
+		clauses.push(clause.join(",\n"));
+	}
 	
-	const if_clause = Blockly.Rules.statementToCode(block, 'IF');
-	if (if_clause == '')
-		throw Error("missing IF clause");
+	var code = clauses.join("\n->\n");
 	
-	const then_clause = Blockly.Rules.statementToCode(block, 'THEN');
-	if (then_clause == '')
-		throw Error("missing THEN clause");
-	
-	const code = 
-		if_clause +
-			"\n->\n" + 
-		then_clause;
+	if (nestedRules.length != 0) {
+		for (var rule of nestedRules) {
+			var ruleCode = Blockly.Rules.blockToCode(rule);
+			// add rule body to nested rules' heads
+			ruleCode = clauses[1] + ",\n" + ruleCode;
+			
+			code += "\n\n" + ruleCode;
+		}
+	}	
 	
 	return code;
 }

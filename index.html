@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<style>
-	.error { color: red }
+	#error { color: red }
 	table td { vertical-align: top }
 	</style>
 	<script>		
@@ -34,6 +34,7 @@
 		<block type="sw_number"></block>
 	</xml>
 </div>
+<div id="hidden" style="display: none"></div>
 <br />
 <table style="width: 100%;">
 	<tr>
@@ -41,12 +42,12 @@
 			<button id="generateRules">Generate rules</button>
 			<button id="generateXml">Generate XML</button>
 			<button onclick="copyToClipboard()">Copy</button>
-			<br /><br />
+			<br /><br /><div id="error">&nbsp;</div>
 			<textarea id="output" rows=10 cols=50></textarea>
 		</td>
 		<td style="float: right">
 			<button id="loadFromXml">Load from XML</button>
-			<br /><br />
+			<br /><br /><br />
 			<textarea id="xmlInput" rows=10 cols=50></textarea>
 		</td>
 	</tr>
@@ -64,17 +65,16 @@
 <script>
 document.getElementById("generateRules").addEventListener('click', function(e) {
 	const workspace = Blockly.getMainWorkspace();
-	var output;
 	try {
-		output = Blockly.Rules.workspaceToCode(workspace);
+		const output = Blockly.Rules.workspaceToCode(workspace);
+		console.log(output);
+		document.getElementById("output").value = output;
+		document.getElementById("error").innerHTML = "&nbsp;";
+		
 	} catch(error) {
-		output = "<span class='error'>" + error + "</span>";
+		console.log(error);
+		document.getElementById("error").innerHTML = error;
 	}
-	
-	// console.log(output);
-	const div = document.getElementById("output");
-	div.style.display = "block";
-	div.innerHTML = output;
 });
 
 document.getElementById("generateXml").addEventListener('click', function(e) {
@@ -82,11 +82,12 @@ document.getElementById("generateXml").addEventListener('click', function(e) {
 	var xml = Blockly.Xml.workspaceToDom(workspace);
 	var xml_text = Blockly.Xml.domToPrettyText(xml);
 		
-	const div = document.getElementById("output");
-	div.style.display = "block";
+	const div = document.getElementById("hidden");
 	div.textContent = xml_text;
-	xml_text = div.innerHTML;
+	xml_text = div.innerHTML;	
+	
 	console.log(xml_text);
+	document.getElementById("output").value = xml_text;
 });
 
 document.getElementById("loadFromXml").addEventListener('click', function(e) {
