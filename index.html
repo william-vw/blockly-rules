@@ -4,32 +4,53 @@
 	<meta charset="utf-8">
 	<style>
 	.error { color: red }
+	table td { vertical-align: top }
 	</style>
+	<script>		
+		function copyToClipboard() {
+			var output = document.getElementById("output");
+
+			output.select();
+			output.setSelectionRange(0, 99999);
+
+			document.execCommand("copy");
+		} 
+	</script>
 </head>
 <body>
 
 <div class="blockly-editor">
 	<div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
 	<xml id="toolbox" style="display: none">
-		<block type="sw_qname"></block>
-		<block type="sw_var"></block>
-		<block type="text"></block>
-		<block type="math_number"></block>
+		<block type="sw_rule"></block>
 		<block type="sw_statement"></block>
 		<block type="sw_rule_builtin_binary_op"></block>
 		<block type="sw_rule_builtin_ternary_op"></block>
 		<block type="sw_rule_builtin_ternary_fn"></block>
 		<block type="sw_rule_builtin_unary_fn"></block>
-		<!-- <block type="sw_rule_builtin_create_with"></block> -->
-		<block type="sw_rule_if_create_with"></block>
-		<block type="sw_rule_then_create_with"></block>
-		<block type="sw_rule"></block>
+		<block type="sw_qname"></block>
+		<block type="sw_var"></block>
+		<block type="sw_string"></block>
+		<block type="sw_number"></block>
 	</xml>
 </div>
 <br />
-<button id="generate">Generate</button>
-<br /><br />
-<div id="output"></div>
+<table style="width: 100%;">
+	<tr>
+		<td>
+			<button id="generateRules">Generate rules</button>
+			<button id="generateXml">Generate XML</button>
+			<button onclick="copyToClipboard()">Copy</button>
+			<br /><br />
+			<textarea id="output" rows=10 cols=50></textarea>
+		</td>
+		<td style="float: right">
+			<button id="loadFromXml">Load from XML</button>
+			<br /><br />
+			<textarea id="xmlInput" rows=10 cols=50></textarea>
+		</td>
+	</tr>
+</div>
 
 <!-- <script src="../../blockly_uncompressed.js"></script> -->
 <script src="https://unpkg.com/blockly/blockly.min.js"></script>
@@ -41,7 +62,7 @@
 <script src="main.js"></script>	
 
 <script>
-document.getElementById("generate").addEventListener('click', function(e) {
+document.getElementById("generateRules").addEventListener('click', function(e) {
 	const workspace = Blockly.getMainWorkspace();
 	var output;
 	try {
@@ -51,8 +72,33 @@ document.getElementById("generate").addEventListener('click', function(e) {
 	}
 	
 	// console.log(output);
-	document.getElementById("output").innerHTML = output;
+	const div = document.getElementById("output");
+	div.style.display = "block";
+	div.innerHTML = output;
 });
+
+document.getElementById("generateXml").addEventListener('click', function(e) {
+	const workspace = Blockly.getMainWorkspace();
+	var xml = Blockly.Xml.workspaceToDom(workspace);
+	var xml_text = Blockly.Xml.domToPrettyText(xml);
+		
+	const div = document.getElementById("output");
+	div.style.display = "block";
+	div.textContent = xml_text;
+	xml_text = div.innerHTML;
+	console.log(xml_text);
+});
+
+document.getElementById("loadFromXml").addEventListener('click', function(e) {
+	var xml_text = document.getElementById("xmlInput").value;
+	if (!xml_text)
+		return;
+	var xml = Blockly.Xml.textToDom(xml_text);
+	
+	const workspace = Blockly.getMainWorkspace();
+	Blockly.Xml.domToWorkspace(xml, workspace);
+});
+
 </script>
 
 </body>

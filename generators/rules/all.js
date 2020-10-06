@@ -4,12 +4,12 @@
 
 // goog.require('Blockly.Rules');
 
-Blockly.Rules['text'] = function(block) {
+Blockly.Rules['sw_string'] = function(block) {
   var code = Blockly.Rules.quote_(block.getFieldValue('TEXT'));
   return [ code, 0 ];
 };
 
-Blockly.Rules['math_number'] = function(block) {
+Blockly.Rules['sw_number'] = function(block) {
   var code = Number(block.getFieldValue('NUM'));
   return [ code, 0 ];
 };
@@ -36,6 +36,8 @@ Blockly.Rules['sw_var'] = function(block) {
 }
 
 Blockly.Rules['sw_statement'] = function(block) {
+	// console.log(block);
+	
 	const spo = [ Blockly.Rules.valueToCode(block, 'SUBJECT', 0), 
 		Blockly.Rules.valueToCode(block, 'PREDICATE', 0), 
 		Blockly.Rules.valueToCode(block, 'OBJECT', 0) ];
@@ -46,7 +48,7 @@ Blockly.Rules['sw_statement'] = function(block) {
 	}
 	
 	const code = "(" + spo.join(" ") + ")";
-	return [ code, 0 ];
+	return code;
 }
 
 function sw_rule_builtin_generator(block, num_args) {
@@ -61,7 +63,7 @@ function sw_rule_builtin_generator(block, num_args) {
 		throw Error("missing builtin argument(s)");
 	
 	const code = name + "(" + elements.join(', ') + ")";
-	return [ code, 0 ];
+	return code;
 }
 
 Blockly.Rules['sw_rule_builtin_unary_fn'] = (block) => sw_rule_builtin_generator(block, 1);
@@ -69,36 +71,10 @@ Blockly.Rules['sw_rule_builtin_ternary_fn'] = (block) => sw_rule_builtin_generat
 Blockly.Rules['sw_rule_builtin_binary_op'] = (block) => sw_rule_builtin_generator(block, 2);
 Blockly.Rules['sw_rule_builtin_ternary_op'] = (block) => sw_rule_builtin_generator(block, 3);
 
-// Blockly.Rules['sw_rule_builtin_create_with'] = function(block) {
-	// var name = block.getFieldValue('BUILTIN_NAME');
-	// var elements = new Array();
-	// for (var i = 0; i < block.itemCount_; i++) {
-		// const element = Blockly.Rules.valueToCode(block, 'ADD' + i, 0);
-		// if (element != '')
-			// elements.push(element);
-	// }
-	// if (elements.length == 0)
-		// throw Error("missing builtin argument(s)");
-	
-	// const code = name + "(" + elements.join(', ') + ")";
-	// return [ code, 0 ];
-// }
-
-Blockly.Rules['sw_rule_if_create_with'] = function(block) {
-	var elements = new Array();
-	for (var i = 0; i < block.itemCount_; i++) {
-		const element = Blockly.Rules.valueToCode(block, 'ADD' + i, 0);
-		if (element != '')
-			elements.push(element);
-	}
-	const code = elements.join(',\n');
-	return code;
-};
-
-Blockly.Rules['sw_rule_then_create_with'] = Blockly.Rules['sw_rule_if_create_with'];
-
 Blockly.Rules['sw_rule'] = function(block) {
 	Blockly.Rules.VAR_CNT = 0;
+	
+	// console.log(block);
 	
 	const if_clause = Blockly.Rules.statementToCode(block, 'IF');
 	if (if_clause == '')
