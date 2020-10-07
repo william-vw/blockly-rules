@@ -5,9 +5,9 @@
 	<style>
 		#error { color: red }
 	</style>
+	<script type="text/javascript" src="lib/FileSaver.min.js"></script>
 </head>
 <body>
-
 <div class="blockly-editor">
 	<div id="blocklyDiv" style="height: 500px; width: 100%;"></div>
 	<xml id="toolbox" style="display: none">
@@ -27,7 +27,8 @@
 <br />
 Load from XML: <input id="loadFromXml" type="file"></button>
 <br /><br />
-<button id="generateRules">Generate rules</button><button id="generateXml">Generate XML</button>
+<button id="generateRules">Generate rules</button>
+<button id="generateXml">Generate XML</button>
 <br /><br /><div id="error">&nbsp;</div>
 <textarea id="output" rows=10 cols=50></textarea>
 
@@ -60,17 +61,17 @@ document.getElementById("generateXml").addEventListener('click', function(e) {
 	var xml = Blockly.Xml.workspaceToDom(workspace);
 	var xml_text = Blockly.Xml.domToPrettyText(xml);
 		
+	// (escape XML characters)
 	/* const div = document.getElementById("hidden");
 	div.textContent = xml_text;
 	xml_text = div.innerHTML; */
 	
-	console.log(xml_text);
-	document.getElementById("output").value = xml_text;
+	var blob = new Blob([xml_text], { type: "text/xml;charset=utf-8" });
+	saveAs(blob, "blockly-rules.xml");
 });
 
 document.getElementById("loadFromXml").addEventListener('change', (event) => {
 	const file = event.target.files[0];
-	console.log(file);
 	
 	const reader = new FileReader();
 	reader.addEventListener('load', (event) => {
