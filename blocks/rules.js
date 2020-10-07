@@ -5,13 +5,13 @@ Blockly.defineBlocksWithJsonArray([
     "args0": [{
       "type": "field_input",
       "name": "NS",
-      "text": ""
+      "text": "ns"
     }],
 	"message1": ":%1",
 	"args1": [{
       "type": "field_input",
       "name": "LN",
-      "text": ""
+      "text": "ln"
     }],
 	"inputsInline": "true",
     "output": "SW_TERM",
@@ -29,7 +29,7 @@ Blockly.defineBlocksWithJsonArray([
     "args0": [{
       "type": "field_input",
       "name": "NAME",
-      "text": ""
+      "text": "var"
     }],
 	"inputsInline": "true",
     "output": "SW_TERM",
@@ -48,7 +48,7 @@ Blockly.defineBlocksWithJsonArray([
     "args0": [{
       "type": "field_input",
       "name": "TEXT",
-      "text": ""
+      "text": "text"
     }],
     "output": "String",
     "style": "text_blocks",
@@ -124,6 +124,32 @@ Blockly.defineBlocksWithJsonArray([
 	"inputsInline": "true",
     "style": "list_blocks",
     "tooltip": "%{BKY_SW_STATEMENT_TOOLTIP}",
+    // "helpUrl": "%{BKY_SW_STATEMENT_HELPURL}",
+    // "extensions": ["sw_statement_tooltip"]
+  
+  }, {
+    "type": "sw_type_statement",
+    "message0": "%{BKY_SW_STATEMENT_SUBJECT} %1",
+    "args0": [{
+        "type": "input_value",
+        "name": "SUBJECT",
+        "check": [ 'SW_TERM' ]
+    }],
+    "message1": "%{BKY_SW_STATEMENT_TYPE} %1",
+	"args1": [{
+		"type": "input_dummy"
+	}],
+    "message2": "%1",
+    "args2": [{
+        "type": "input_value",
+        "name": "OBJECT",
+		"check": [ 'SW_TERM' ]
+    }],
+	"previousStatement": null,
+	"nextStatement": null,
+	"inputsInline": "true",
+    "style": "list_blocks",
+    "tooltip": "%{BKY_SW_TYPE_STATEMENT_TOOLTIP}",
     // "helpUrl": "%{BKY_SW_STATEMENT_HELPURL}",
     // "extensions": ["sw_statement_tooltip"]
   
