@@ -51,6 +51,22 @@ Blockly.Rules['sw_statement'] = function(block) {
 	return code;
 }
 
+Blockly.Rules['sw_type_statement'] = function(block) {
+	// console.log(block);
+	
+	const spo = [ Blockly.Rules.valueToCode(block, 'SUBJECT', 0), 
+		"rdf:type",
+		Blockly.Rules.valueToCode(block, 'OBJECT', 0) ];
+	
+	for (var i = 0; i < spo.length; i++) {
+		if (spo[i] == '')
+			throw Error("missing S/P/O from statement");
+	}
+	
+	const code = "(" + spo.join(" ") + ")";
+	return code;
+}
+
 function sw_rule_builtin_generator(block, num_args) {
 	var name = block.getFieldValue('BUILTIN');
 	var elements = new Array();
