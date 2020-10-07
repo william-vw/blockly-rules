@@ -71,8 +71,12 @@ Blockly.Rules['sw_rule_builtin_ternary_fn'] = (block) => sw_rule_builtin_generat
 Blockly.Rules['sw_rule_builtin_binary_op'] = (block) => sw_rule_builtin_generator(block, 2);
 Blockly.Rules['sw_rule_builtin_ternary_op'] = (block) => sw_rule_builtin_generator(block, 3);
 
-Blockly.Rules['sw_rule'] = function(block) {
-	Blockly.Rules.VAR_CNT = 0;
+Blockly.Rules['sw_rule'] = function(block) {	
+	const name = Blockly.Rules.escape_(block.getFieldValue('NAME'));
+	if (Blockly.Rules.RULE_NAMES.includes(name))
+		throw Error("need unique names for rules (" + name + ")");
+	
+	Blockly.Rules.RULE_NAMES.push(name);
 				
 	// const if_clause = Blockly.Rules.statementToCode(block, 'IF');
 	// if (if_clause == '')
@@ -108,13 +112,21 @@ Blockly.Rules['sw_rule'] = function(block) {
 		clauses.push(clause.join(",\n"));
 	}
 	
-	var code = clauses.join("\n->\n");
+	var code = 
+	// "[R" + Blockly.Rules.RULE_CNT++ + "\n" + 
+	"[" + name + "\n" +
+		clauses.join("\n->\n") + 
+	"\n]";
 	
 	if (nestedRules.length != 0) {
 		for (var rule of nestedRules) {
 			var ruleCode = Blockly.Rules.blockToCode(rule);
+			var ruleName = ruleCode.substring(1, ruleCode.indexOf("\n"));
+			var ruleContent = ruleCode.substring(ruleCode.indexOf("\n") + 1, ruleCode.length - 1).trim();
+			
 			// add rule body to nested rules' heads
-			ruleCode = clauses[1] + ",\n" + ruleCode;
+			ruleContent = clauses[1] + ",\n" + ruleContent;
+			ruleCode = "[" + ruleName + "\n" + ruleContent + "\n]";
 			
 			code += "\n\n" + ruleCode;
 		}

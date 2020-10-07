@@ -1643,3 +1643,7 @@ Blockly.Msg.SW_BUILTIN_UNARY_FN_TOOLTIP = "Connect this unary builtin to a term.
 Blockly.Msg.SW_BUILTIN_TERNARY_FN_TOOLTIP = "Connect this ternary builtin to set of terms.";
 Blockly.Msg.SW_BUILTIN_BINARY_OP_TOOLTIP = "Connect this binary builtin to a set of terms.";
 Blockly.Msg.SW_BUILTIN_TERNARY_OP_TOOLTIP = "Connect this ternary builtin to a set of terms.";
+
+Blockly.Msg.SW_STATEMENT_SUBJECT = "s";
+Blockly.Msg.SW_STATEMENT_PREDICATE = "p";
+Blockly.Msg.SW_STATEMENT_OBJECT = "o";

@@ -23,3 +23,12 @@ Blockly.Rules.quote_ = function(string) {
                  .replace(/"/g, '\\\"');
   return '"' + string + '"';
 };
+
+Blockly.Rules.escape_ = function(name) {
+	return encodeURI(name);
+};
+
+Blockly.Rules.init = function(workspace) {
+	Blockly.Rules.RULE_CNT = 0;
+	Blockly.Rules.RULE_NAMES = [];
+};

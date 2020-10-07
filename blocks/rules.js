@@ -75,22 +75,24 @@ Blockly.defineBlocksWithJsonArray([
 	
   }, {
 	"type": "sw_rule",
-	"message0": "%{BKY_SW_RULE_IF} %1",
-	"args0": [
-		{
-			"type": "input_statement",
-			"name": "IF",
-			"check": [ "sw_statement", "sw_rule_builtin" ]
-		}
-	],
-	"message1": "%{BKY_SW_RULE_THEN} %1",
-	"args1": [
-		{
-			"type": "input_statement",
-			"name": "THEN",
-			"check": "sw_rule"
-		}
-	],
+	"message0": "%1",
+	"args0": [{
+		"type": "field_input",
+		"name": "NAME",
+		"text": "rule name"
+	}],
+	"message1": "%{BKY_SW_RULE_IF} %1",
+	"args1": [{
+		"type": "input_statement",
+		"name": "IF",
+		"check": [ "sw_statement", "sw_rule_builtin" ]
+	}],
+	"message2": "%{BKY_SW_RULE_THEN} %1",
+	"args2": [{
+		"type": "input_statement",
+		"name": "THEN",
+		"check": "sw_rule"
+	}],
 	"previousStatement": "sw_rule",
 	"nextStatement": "sw_rule",
 	"style": "logic_blocks",
@@ -99,30 +101,24 @@ Blockly.defineBlocksWithJsonArray([
   
   }, {
     "type": "sw_statement",
-    "message0": "subject %1",
-    "args0": [
-      {
+    "message0": "%{BKY_SW_STATEMENT_SUBJECT} %1",
+    "args0": [{
         "type": "input_value",
         "name": "SUBJECT",
         "check": [ 'SW_TERM', 'String', 'Number' ]
-      }
-    ],
-    "message1": "predicate %1",
-    "args1": [
-      {
-        "type": "input_value",
+    }],
+    "message1": "%{BKY_SW_STATEMENT_PREDICATE} %1",
+    "args1": [{
+		"type": "input_value",
         "name": "PREDICATE",
 		"check": [ 'SW_TERM', 'String', 'Number' ]
-      }
-    ],
-    "message2": "object %1",
-    "args2": [
-      {
+    }],
+    "message2": "%{BKY_SW_STATEMENT_OBJECT} %1",
+    "args2": [{
         "type": "input_value",
         "name": "OBJECT",
 		"check": [ 'SW_TERM', 'String', 'Number' ]
-      }
-    ],
+    }],
 	"previousStatement": null,
 	"nextStatement": null,
 	"inputsInline": "true",
