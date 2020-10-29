@@ -288,8 +288,8 @@ Blockly.defineBlocksWithJsonArray([
 ]);
 
 var SwNamespaces = [
-	[ "sa", "http://projects.cs.dal.ca/niche/sleepapnea.owl" ], 
-	[ "dc", "dc" ]
+	[ "sa", "http://projects.cs.dal.ca/niche/sleepapnea.owl#" ], 
+	[ "dc", "http://purl.org/dc/terms/" ]
 ];
 
 var SwTerms = {
@@ -303,10 +303,14 @@ var SwTerms = {
 
 		const query = 
 			"PREFIX owl: <http://www.w3.org/2002/07/owl#> "+
+			"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
+			"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 			"SELECT ?uri WHERE { " +
 			"{ ?uri a owl:Class } UNION " +
+			"{ ?uri a rdfs:Class } UNION " +
 			"{ ?uri a owl:ObjectProperty } UNION " +
-			"{ ?uri a owl:DatatypeProperty }" +
+			"{ ?uri a owl:DatatypeProperty } UNION " +
+			"{ ?uri a rdf:Property  } " +
 			"FILTER (STRSTARTS(str(?uri), '" + uri + "')) " +
 			"} ORDER BY ?uri";
 		console.log(query);
@@ -318,10 +322,9 @@ var SwTerms = {
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var results = JSON.parse(this.responseText);
-				// console.log(results);
-				
 				var terms = SwTerms.collectTerms(uri, results);	
 				SwTerms.map[uri] = terms; 
+				
 				callback(terms);
 			}
 		};
@@ -331,14 +334,18 @@ var SwTerms = {
 
 	collectTerms: function(namespace, results) {
 		var bindings = results.results.bindings;
-		if (bindings.length == 0)
+		if (bindings.length == 0) {
+			console.log("no results found");
 			return [[ '', '' ]];
+		
+		} else
+			console.log(bindings.length + " results found");
 
 		var array = [];
 		for (var i = 0; i < bindings.length; i++) {
 			var binding = bindings[i];
 			var uri = binding.uri.value;
-			var name = uri.substring(namespace.length + 1);
+			var name = uri.substring(namespace.length);
 			if (name)
 				array.push([ name, uri ]);
 		}
