@@ -286,3 +286,119 @@ Blockly.defineBlocksWithJsonArray([
 	"tooltip": "%{BKY_SW_BUILTIN_TERNARY_OP_TOOLTIP}"  
   }
 ]);
+
+var SwNamespaces = [
+	[ "sa", "http://projects.cs.dal.ca/niche/sleepapnea.owl" ], 
+	[ "dc", "dc" ]
+];
+
+var SwTerms = {
+	map: {},
+
+	getTerms: function(uri, callback) {
+		if (this.map[uri]) {
+			callback(this.map[uri]);
+			return;
+		}
+
+		const query = 
+			"PREFIX owl: <http://www.w3.org/2002/07/owl#> "+
+			"SELECT ?uri WHERE { " +
+			"{ ?uri a owl:Class } UNION " +
+			"{ ?uri a owl:ObjectProperty } UNION " +
+			"{ ?uri a owl:DatatypeProperty }" +
+			"FILTER (STRSTARTS(str(?uri), '" + uri + "')) " +
+			"} ORDER BY ?uri";
+		console.log(query);
+		
+		var url = "http://ppr.cs.dal.ca:3010/terms/query?query=" + encodeURIComponent(query);
+		console.log("calling: " + url);
+		
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var results = JSON.parse(this.responseText);
+				// console.log(results);
+				
+				var terms = SwTerms.collectTerms(uri, results);	
+				SwTerms.map[uri] = terms; 
+				callback(terms);
+			}
+		};
+		xhttp.open("GET", url, true);
+		xhttp.send();
+	},
+
+	collectTerms: function(namespace, results) {
+		var bindings = results.results.bindings;
+		if (bindings.length == 0)
+			return [[ '', '' ]];
+
+		var array = [];
+		for (var i = 0; i < bindings.length; i++) {
+			var binding = bindings[i];
+			var uri = binding.uri.value;
+			var name = uri.substring(namespace.length + 1);
+			if (name)
+				array.push([ name, uri ]);
+		}
+		return array;
+	}
+};
+
+// inspired by
+// https://stackoverflow.com/questions/51667300/how-to-hide-remove-field-in-blockly
+Blockly.Blocks['dynamic_dropdown'] = {
+ 
+  curNs: "",
+
+  init: function() {
+	var self = this;
+	var dropdown = new Blockly.FieldDropdown(SwNamespaces,
+		function(newNs) { self.onNsChange.call(self, newNs); });
+
+	this.setInputsInline(true);
+
+	var input = 
+	  this.appendDummyInput()
+		.setAlign(Blockly.ALIGN_RIGHT)
+        .appendField(dropdown, 'PREFIX');
+	
+	this.onNsChange(SwNamespaces[0][1]);
+  },
+
+  onNsChange: function(newNs) {
+	if (newNs != this.curNs) {
+		this.curNs = newNs;
+		this.updateShape();
+	}
+  },
+
+  updateShape: function() {
+	var block = this;
+	SwTerms.getTerms(this.curNs, function(terms) {
+		if (block.getInput('NAME')) {
+			block.removeInput('NAME');
+		}
+		block.appendDummyInput('NAME')
+		  .appendField(new Blockly.FieldDropdown(function() {
+			// console.log(terms);
+			return terms;
+		  }), 'URI');
+	});
+  },
+
+  mutationToDom: function () {
+	var container = document.createElement('mutation');
+	container.setAttribute('cur_ns', this.curNs);
+	
+	return container;
+  },
+  
+  domToMutation: function (container) {
+	this.curNs = container.getAttribute('cur_ns');
+	
+	this.updateShape();
+  } 
+};
+
